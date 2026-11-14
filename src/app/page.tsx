@@ -5,16 +5,15 @@ import {
   ArrowUpRight,
   Check,
   ChevronRight,
-  CircleDot,
   Compass,
   Crosshair,
   Drone,
+  HardHat,
+  LandPlot,
   Layers3,
-  Map,
   MapPinned,
   Mountain,
   Move3D,
-  Ruler,
   ScanLine,
   Send,
   ShieldCheck,
@@ -23,11 +22,12 @@ import {
   Waves,
 } from "lucide-react";
 import QuoteForm from "@/components/quote-form";
+import ScrollEffects from "@/components/scroll-effects";
 import SiteHeader from "@/components/site-header";
 
 const services = [
   {
-    icon: Crosshair,
+    icon: LandPlot,
     number: "01",
     title: "Levantamientos topográficos",
     description:
@@ -43,7 +43,7 @@ const services = [
     tag: "Ortomosaicos · Modelos 3D",
   },
   {
-    icon: Ruler,
+    icon: HardHat,
     number: "03",
     title: "Replanteo y control de obras",
     description:
@@ -134,18 +134,22 @@ const steps = [
 function Logo({ light = false }: { light?: boolean }) {
   return (
     <a
-      className={`brand${light ? " brand--light" : ""}`}
+      className="brand"
       href="#inicio"
       aria-label="GeoSpatial, volver al inicio"
     >
-      <span className="brand__mark" aria-hidden="true">
-        <Map className="brand__map" strokeWidth={1.7} />
-        <CircleDot className="brand__dot" strokeWidth={2} />
-      </span>
-      <span className="brand__name">
-        GEO<span>SPATIAL</span>
-        <small>TOPOGRAFÍA &amp; TERRITORIO</small>
-      </span>
+      <Image
+        className="brand__logo"
+        src={
+          light
+            ? "/images/geospatial-logo-light.png"
+            : "/images/geospatial-logo.png"
+        }
+        alt=""
+        width={595}
+        height={180}
+        sizes="(max-width: 680px) 148px, 178px"
+      />
     </a>
   );
 }
@@ -153,10 +157,10 @@ function Logo({ light = false }: { light?: boolean }) {
 export default function Home() {
   return (
     <>
+      <ScrollEffects />
       <SiteHeader />
       <main>
         <section className="hero" id="inicio">
-          <div className="hero__contours" aria-hidden="true" />
           <div className="hero__inner page-width">
             <div className="hero__copy">
               <p className="eyebrow eyebrow--lime">
@@ -192,34 +196,29 @@ export default function Home() {
                 </span>
               </div>
             </div>
-
-            <div className="hero__visual" aria-label="Paisajes del norte de Chile">
-              <div className="hero__image hero__image--main">
+            <div className="hero__visual">
+              <svg
+                className="hero__clip-defs"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <defs>
+                  <clipPath
+                    id="hero-image-clip"
+                    clipPathUnits="objectBoundingBox"
+                  >
+                    <path d="M .38 0 H 1 V 1 C .75 .92 .51 .85 .32 .81 C .15 .78 .06 .75 .025 .70 C 0 .65 .02 .58 .06 .51 C .13 .38 .2 .21 .27 .10 C .31 .04 .35 .01 .38 0 Z" />
+                  </clipPath>
+                </defs>
+              </svg>
+              <div className="hero__image">
                 <Image
                   src="/images/andes.jpg"
                   alt="Cordillera de los Andes en el norte de Chile"
                   fill
-                  priority
-                  sizes="(max-width: 760px) 80vw, 35vw"
+                  preload
+                  sizes="(max-width: 680px) 90vw, (max-width: 900px) 43vw, 48vw"
                 />
-              </div>
-              <div className="hero__image hero__image--small">
-                <Image
-                  src="/images/coast.jpg"
-                  alt="Costa del norte de Chile"
-                  fill
-                  priority
-                  sizes="(max-width: 760px) 42vw, 18vw"
-                />
-              </div>
-              <div className="hero__coordinate">
-                <span className="coordinate__icon">
-                  <MapPinned size={17} />
-                </span>
-                <span>
-                  <strong>29°54&apos; S · 71°15&apos; O</strong>
-                  <small>La Serena, Chile</small>
-                </span>
               </div>
               <div className="hero__precision">
                 <span className="precision__icon">
@@ -232,14 +231,12 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div className="hero__bottom-line" aria-hidden="true">
-            <span />
-          </div>
+          <div className="hero__bottom-line" aria-hidden="true" />
         </section>
 
         <section className="sectors page-width" aria-label="Sectores atendidos">
           <p>APOYAMOS PROYECTOS DE</p>
-          <div className="sectors__list">
+          <div className="sectors__list" data-scroll-reveal>
             {sectors.map((sector) => (
               <span className="sector-chip" key={sector}>
                 {sector}
@@ -250,7 +247,7 @@ export default function Home() {
 
         <section className="services section-pad" id="servicios">
           <div className="page-width">
-            <div className="section-heading">
+            <div className="section-heading" data-scroll-reveal>
               <div>
                 <p className="eyebrow eyebrow--blue">QUÉ HACEMOS</p>
                 <h2>
@@ -265,7 +262,11 @@ export default function Home() {
             </div>
             <div className="service-grid">
               {services.map(({ icon: Icon, number, title, description, tag }) => (
-                <article className="service-card" key={number}>
+                <article
+                  className="service-card"
+                  data-scroll-reveal
+                  key={number}
+                >
                   <div className="service-card__top">
                     <span className="service-card__icon">
                       <Icon size={20} strokeWidth={1.7} />
@@ -298,7 +299,7 @@ export default function Home() {
 
         <section className="why section-pad" id="nosotros">
           <div className="why__inner page-width">
-            <div className="why__content">
+            <div className="why__content" data-scroll-reveal>
               <p className="eyebrow eyebrow--blue">POR QUÉ GEOSPATIAL</p>
               <h2>
                 Territorio conocido.
@@ -323,7 +324,7 @@ export default function Home() {
                 ))}
               </div>
             </div>
-            <div className="why__visual">
+            <div className="why__visual" data-scroll-reveal>
               <div className="why__photo">
                 <Image
                   src="/images/terrain.jpg"
@@ -343,7 +344,11 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div className="stats page-width" aria-label="Estadísticas">
+          <div
+            className="stats page-width"
+            aria-label="Estadísticas"
+            data-scroll-reveal
+          >
             <div className="stat">
               <span className="stat__value">01</span>
               <span className="stat__label">equipo técnico dedicado</span>
@@ -367,7 +372,10 @@ export default function Home() {
 
         <section className="process section-pad" id="proceso">
           <div className="page-width">
-            <div className="section-heading section-heading--center">
+            <div
+              className="section-heading section-heading--center"
+              data-scroll-reveal
+            >
               <div>
                 <p className="eyebrow eyebrow--blue">SIMPLE Y TRANSPARENTE</p>
                 <h2>De tu solicitud a la entrega, en 4 pasos</h2>
@@ -378,7 +386,11 @@ export default function Home() {
             </div>
             <div className="process-grid">
               {steps.map((step, index) => (
-                <article className="process-step" key={step.number}>
+                <article
+                  className="process-step"
+                  data-scroll-reveal
+                  key={step.number}
+                >
                   <div className="process-step__track">
                     <span>{step.number}</span>
                     {index < steps.length - 1 && <i aria-hidden="true" />}
@@ -393,7 +405,7 @@ export default function Home() {
 
         <section className="quote section-pad" id="cotizar">
           <div className="quote__inner page-width">
-            <div className="quote__copy">
+            <div className="quote__copy" data-scroll-reveal>
               <p className="eyebrow eyebrow--lime">
                 <span className="eyebrow__dot" />
                 COTIZACIÓN SIN COSTO

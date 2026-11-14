@@ -55,10 +55,14 @@ export default function QuoteForm() {
   }
 
   return (
-    <form className="quote-form" onSubmit={handleSubmit}>
+    <form
+      className="quote-form"
+      data-scroll-reveal
+      onSubmit={handleSubmit}
+    >
       <div className="quote-form__heading">
         <span className="quote-form__icon">
-          <Paperclip size={18} />
+          <Paperclip size={18} strokeWidth={1.7} />
         </span>
         <div>
           <h3>Cuéntanos sobre tu proyecto</h3>
